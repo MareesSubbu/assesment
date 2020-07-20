@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" version="1.0">
+	<xs:element name="document-generation" type="create-document"/>
+	<xs:complexType name="create-document">
+		<xs:sequence>
+			<xs:element name="document" type="document"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="document">
+		<xs:sequence>
+			<xs:element name="document-overview" type="document-overview"/>
+			<!-- <xs:element name="business-data" type="business-data"/> -->
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="document-overview">
+		<xs:sequence>
+			<xs:element name="template-resource-id" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>	
+	<xs:complexType name="districts">
+		<xs:sequence>
+			<xs:element name="districts" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="district">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0"/>
+			<xs:element name="address" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="concentration-values">
+		<xs:sequence>
+			<xs:element name="concentration-values" type="concentration-values" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="concentration-value">
+		<xs:sequence>
+			<xs:element name="city" type="xs:string" minOccurs="0"/>
+			<xs:element name="date" type="xs:string" minOccurs="0"/>
+			<xs:element name="high-value" type="xs:string" minOccurs="0"/>
+			<xs:element name="low-value" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

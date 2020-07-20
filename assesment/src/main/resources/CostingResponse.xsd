@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb" attributeFormDefault="unqualified"
+	xmlns:tns="http://www.ferguson.com/CostingResponse" elementFormDefault="qualified"
+	jxb:version="2.1">
+
+	<xs:element name="costingResponse" type="costingResponseType" />
+
+	<xs:complexType name="baseResponse">
+		<xs:sequence>
+			<xs:element name="error" type="xs:boolean" />
+			<xs:element name="errorCode" type="xs:string" />
+			<xs:element name="errorMsg" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="costingResponseType">
+		<xs:complexContent>
+			<xs:extension base="baseResponse">
+				<xs:sequence>
+					<xs:element name="costedProduct" type="costedProductSufficient" minOccurs="1" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="costedProductSufficient">
+		<xs:sequence>
+			<xs:element name="contractCost" type="contractCostType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="omsOrderId" type="xs:string" use="optional" />
+		<xs:attribute name="omsOrderLineId" type="xs:string" use="required" />
+		<xs:attribute name="productId" type="xs:string" use="required" />
+		<xs:attribute name="lineEvaluationDate" type="xs:dateTime"
+			use="required" />
+		<xs:attribute name="processingCode" type="xs:string" use="optional" />
+		<xs:attribute name="processingMsg" type="xs:string" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="costedProductQuantityAvailable">
+		<xs:complexContent>
+			<xs:extension base="costedProductSufficient">
+				<xs:attribute name="requestedQuantity" type="xs:decimal"
+					use="required" />
+				<xs:attribute name="accumulation" type="xs:decimal"
+					use="required" />
+				<xs:attribute name="totalExtendedCoreCost" type="xs:decimal"
+					use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="contractCostType">
+		<xs:attribute name="claimLineId" type="xs:long" />
+		<xs:attribute name="claimAmount" type="xs:decimal" use="required" />
+		<xs:attribute name="claimExtendedAmount" type="xs:decimal"
+			use="required" />
+		<xs:attribute name="orderStatus" type="orderStatusEnum"
+			use="required" />
+		<xs:attribute name="coreCost" type="xs:decimal" use="required" />
+		<xs:attribute name="costCodeIndicator" type="xs:string"
+			use="required" />
+		<xs:attribute name="contractId" type="xs:long" />
+		<xs:attribute name="contractRevision" type="xs:long" />
+		<xs:attribute name="contractName" type="xs:string" use="required" />
+		<xs:attribute name="vendorName" type="xs:string" use="required" />
+		<xs:attribute name="vendorAgreement" type="xs:string"
+			use="required" />
+		<xs:attribute name="vendorQuoteId" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:simpleType name="orderStatusEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ORDERED" />
+			<xs:enumeration value="INVOICED" />
+			<xs:enumeration value="PROCESSED" />
+			<xs:enumeration value="REJECTED" />
+			<xs:enumeration value="DELETED" />
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>
